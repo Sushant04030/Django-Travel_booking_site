@@ -7,27 +7,19 @@
         {% for feedback in feedbacks %}
         <div class="feedback-div">
             <p><span style="font-size: 1.5rem;">
-                    {% if review.userImage %}
-                    <img class="reviewer-img" src="{{review.userImage.url}}">
-                    {% else %}
-                    <img class="reviewer-img" src="/static/images/guest-user.jpg">
-                    {% endif %}
+                    <!-- {% if review.userImage %} -->
+                    <!-- <img class="reviewer-img" src="{{feedback.name}}"> -->
+                    <!-- {% else %} -->
+                    <!-- <img class="reviewer-img" src="/static/images/guest-user.jpg"> -->
+                    <!-- {% endif %} -->
 
-                    {% if feedback.user.first_name and feedback.user.last_name %}
-                    {{feedback.user.first_name|capfirst}} {{feedback.user.last_name|capfirst}}
+                    {% if feedback.name %}
+                     {{feedback.name|capfirst}}
+                    {% endif %}
                 </span>
                 <br>
-                {{feedback.updated_date}}
+                {{feedback.reviewed_date}}
             </p>
-            {% else %}
-
-            {{feedback.user.username}}
-            </span>
-            <br>
-            {{feedback.updated_date}}
-            </p>
-            {% endif %}
-            <h4>{{feedback.title|capfirst}}</h4>
             <p> {{feedback.review|capfirst}}</p>
 
         </div>

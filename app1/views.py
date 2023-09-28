@@ -32,21 +32,19 @@ def index_view(request):
                     count +=1
         except:
             if top_packages == []:
-                top_packages    = Package.objects.all().order_by('-id')[:3]
-
-        banners         = Banner.objects.all().order_by('-id')[0:3]
-        feedback        = Feedback.objects.all().order_by('-id')[0:1]
-        drivers         = Driver.objects.all().order_by('-id')[0:4]
+                top_packages    = Package.objects.all().order_by('-id')[:4]
     except:
-        top_packages    = Package.objects.all().order_by('-id')[:3]
-        banners         = Banner.objects.all().order_by('-id')[0]
-        feedback        = Feedback.objects.all().order_by('-id')[0]
-        drivers         = Driver.objects.all().order_by('-id')[0]
+        top_packages    = Package.objects.all().order_by('-id')[:4]
 
+    top_blogs       = Blog.objects.all().order_by('-id')[:4]
+    banners         = Banner.objects.all().order_by('-id')[0:4]
+    feedback        = Feedback.objects.all().order_by('-id')[0:1]
+    drivers         = Driver.objects.all().order_by('-id')[0:4]
     gallery_images  = Gallery.objects.all()
     
     
     context ={
+        'top_blogs'     :top_blogs,
         'top_packages'  :top_packages,
         'banners'       :banners,
         'feedback'      :feedback,
@@ -57,22 +55,16 @@ def index_view(request):
     return render(request, 'app1/index.html',context)
 
 def packages_view(request):
-
     packages        = Package.objects.all()
     paginator       = Paginator(packages,15)
     page            = request.GET.get("page")
     paged_packages  = paginator.get_page(page)
-
     context={
         'packages':paged_packages
     }
 
-    return render(request, 'app1/packages.html', context)
+    return render(request, 'app1/package/packages.html', context)
     
-# def Package_view(request):
-
-#     return render(request, 'app1/productdetail.html')
-
 
 def packageDetail_view(request, pk ):
     package     = Package.objects.get( id = pk )
@@ -80,20 +72,43 @@ def packageDetail_view(request, pk ):
     paginator       = Paginator(reviews,3)
     page            = request.GET.get("page")
     paged_packages  = paginator.get_page(page)
-    drivers     = Driver.objects.all()
+    # drivers     = Driver.objects.all()
     events     = PackageEvent.objects.filter( package = package )
     photos     = PackageGallery.objects.filter( package = package )
-
-    print(reviews)
 
     context = {
         'package' : package,
         'reviews' : paged_packages,
         'events'  : events,
         'photos'  : photos,
-        'drivers'  : drivers,
+        # 'drivers'  : drivers,
     }
-    return render(request, 'app1/packageDetail.html', context)
+    return render(request, 'app1/package/packageDetail.html', context)
+
+
+# # # # # blogs views # # # # 
+def blogs_view(request):
+    blogs           = Blog.objects.all()
+    paginator       = Paginator(blogs,15)
+    page            = request.GET.get("page")
+    paged_blogs     = paginator.get_page(page)
+    context={
+        'blogs':paged_blogs
+    }
+
+    return render(request, 'app1/blog/blogs.html', context)
+
+def blogDetail_view(request, pk ):
+    blog       = Blog.objects.get( id = pk )
+    events     = BlogEvent.objects.filter( blog = blog )
+    photos     = BlogGallery.objects.filter( blog = blog )
+
+    context = {
+        'blog' : blog,
+        'events'  : events,
+        'photos'  : photos,
+    }
+    return render(request, 'app1/blog/blogDetail.html', context)
 
 
 def search_view(request):
@@ -111,27 +126,31 @@ def search_view(request):
     return render(request, 'app1/search.html', context)
 
 
-def drivers_view(request):
+def prices_view(request):
     drivers     = Driver.objects.all()
     carcharges  = CarCharge.objects.all()
+    photos = VehicleGallery.objects.all()
+    paginator       = Paginator(photos,20)
+    page            = request.GET.get("page")
+    paged_packages  = paginator.get_page(page)
     context = {
         'drivers' : drivers,
-        'carcharges' : carcharges
+        'carcharges' : carcharges,
+        'photos' : paged_packages,
     }
-    return render(request, 'app1/driverPage.html', context)
+    return render(request, 'app1/price/pricePage.html', context)
+
 
 def gallery_view(request):
     photos          = Gallery.objects.all()
-    paginator       = Paginator(photos,21)
+    paginator       = Paginator(photos,20)
     page            = request.GET.get("page")
     paged_packages  = paginator.get_page(page)
 
     context = {
         'photos' : paged_packages,
     }
-    return render(request, 'app1/galleryPage.html', context)
-
-
+    return render(request, 'app1/gallery/galleryPage.html', context)
 
 
 # # # # # # # # # Review add, delete, edit # # # # # # # # # # 
@@ -691,12 +710,12 @@ def feedback_view(request):
 # # # # # about Us views # # # # #
 
 def about_view(request):
-    return render(request, 'app1/about.html')
+    return render(request, 'app1/about/about.html')
 
 
 # # # # # Contact Us views # # # # #
 def contactUs_view(request):
-    return render(request, 'app1/contactUs.html')
+    return render(request, 'app1/contact/contactUs.html')
 
 
 def contact_view(request):

@@ -57,12 +57,13 @@ class Package(models.Model):
     title               = models.CharField(max_length=200,blank = True, null= True)
     image               = models.ImageField(upload_to='static/images', blank = True, null= True)
     country             = models.CharField(max_length=200,blank = True, null= True,choices=country_choice)
-    departure           = models.TextField(blank = True, null= True)
+    start               = models.CharField(max_length=200,blank = True, null= True)
+    end                 = models.CharField(max_length=200,blank = True, null= True)
     speciality          = models.TextField(blank = True, null= True)
     description         = models.TextField(blank = True, null= True)
     map_link            = models.TextField(blank = True, null= True)
-    days                = models.IntegerField(default=0)
-    nights              = models.IntegerField(default=0)
+    days                = models.CharField(max_length=200,blank = True, null= True)
+    nights              = models.CharField(max_length=200,blank = True, null= True)
     price               = models.IntegerField(default=0)
     available           = models.BooleanField(default=False)
     created_at          = models.DateTimeField(auto_now=True)
@@ -93,7 +94,6 @@ class PackageEvent(models.Model):
     package             = models.ForeignKey(Package, on_delete=models.CASCADE)
     title               = models.CharField(max_length=250,blank = True, null= True)
     description         = models.TextField(blank = True, null= True)
-    image               = models.ImageField(upload_to='static/images', blank = True, null= True)
     created_date        = models.DateTimeField(auto_now_add=True)
     updated_date        = models.DateTimeField(auto_now=True)
 
@@ -104,7 +104,6 @@ class PackageEvent(models.Model):
 class PackageGallery(models.Model): 
     package             = models.ForeignKey(Package, on_delete=models.CASCADE)
     title               = models.CharField(max_length=250,blank = True, null= True)
-    description         = models.TextField(blank = True, null= True)
     image               = models.ImageField(upload_to='static/images', blank = True, null= True)
     created_date        = models.DateTimeField(auto_now_add=True)
     updated_date        = models.DateTimeField(auto_now=True)
@@ -117,9 +116,63 @@ class PackageGallery(models.Model):
         verbose_name_plural = 'PackageGalleries'
 
 
+# # # # # Blogs model # # # # # #
+class Blog(models.Model):
+    title               = models.CharField(max_length=200,blank = True, null= True)
+    image               = models.ImageField(upload_to='static/images', blank = True, null= True)
+    speciality          = models.TextField(blank = True, null= True)
+    description         = models.TextField(blank = True, null= True)
+    created_at          = models.DateTimeField(auto_now=True)
+    updated_at          = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.id}. {self.title}" 
+
+
+class BlogEvent(models.Model): 
+    blog                = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    title               = models.CharField(max_length=250,blank = True, null= True)
+    description         = models.TextField(blank = True, null= True)
+    created_date        = models.DateTimeField(auto_now_add=True)
+    updated_date        = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.blog.title
+
+
+class BlogGallery(models.Model): 
+    blog                = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    title               = models.CharField(max_length=250,blank = True, null= True)
+    image               = models.ImageField(upload_to='static/images', blank = True, null= True)
+    created_date        = models.DateTimeField(auto_now_add=True)
+    updated_date        = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.blog.title
+
+    class Meta:
+        verbose_name= 'BlogGallery'
+        verbose_name_plural = 'BlogGalleries'
+
+
+# # # # # Gallery model # # # # #
+class VehicleGallery(models.Model): 
+    title               = models.CharField(max_length=250,blank = True, null= True)
+    image               = models.ImageField(upload_to='static/images', blank = True, null= True)
+    created_date        = models.DateTimeField(auto_now_add=True)
+    updated_date        = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name= 'VehicleGallery'
+        verbose_name_plural = 'VehicleGalleries'
+
+
 # # # # # Gallery model # # # # #
 class Gallery(models.Model): 
-    title               = models.TextField(blank = True, null= True)
+    title               = models.CharField(max_length=250,blank = True, null= True)
     image               = models.ImageField(upload_to='static/images', blank = True, null= True)
     created_date        = models.DateTimeField(auto_now_add=True)
     updated_date        = models.DateTimeField(auto_now=True)
@@ -134,10 +187,10 @@ class Gallery(models.Model):
 
 # # # # # review model # # # # #
 class Feedback(models.Model):
-    user                = models.ForeignKey(User, on_delete=models.CASCADE)
-    title               = models.CharField(max_length=250, blank = True)
+    name                = models.CharField(max_length=250, blank = True)
     address             = models.CharField(max_length=250, blank = True)
     review              = models.TextField(blank = True, null= True)
+    reviewed_date       = models.CharField(max_length=50,blank=True,null=True)
     created_date        = models.DateTimeField(auto_now_add=True)
     updated_date        = models.DateTimeField(auto_now=True)
 
@@ -146,7 +199,7 @@ class Feedback(models.Model):
         return profile.image
     
     def __str__(self):
-        return self.title  + ". User : " + self.user.username
+        return self.name
 
 
 
@@ -218,7 +271,7 @@ class CarCharge(models.Model):
     image               = models.ImageField(upload_to='static/images', blank = True, null= True)
     persons             = models.TextField(blank = True, null= True)
     price               = models.TextField(blank = True, null= True)
-    perKM               = models.TextField(blank = True, null= True)
+    extra               = models.TextField(blank = True, null= True)
     available           = models.BooleanField(default=False)
     created_at          = models.DateTimeField(auto_now=True)
     updated_at          = models.DateTimeField(auto_now_add=True)

@@ -5,8 +5,12 @@ from . import views
 urlpatterns = [
     path('', views.index_view, name='index_view'),
     path('search/', views.search_view, name='search_view'),
+    
     path('packages/', views.packages_view, name='packages_view'),
     path('packageDetail/<int:pk>/', views.packageDetail_view, name='packageDetail_view'),
+
+    path('blog/', views.blogs_view, name='blogs_view'),
+    path('blogdetail/<int:pk>/', views.blogDetail_view, name='blogDetail_view'),
 
     path('review/<int:pk>/', views.review_add_view, name='review_add_view'),
     path('reviewDelete/<int:pk>/<int:id>/', views.review_delete_view, name='review_delete_view'),
@@ -20,7 +24,7 @@ urlpatterns = [
     path("activate/<uidb64>/<token>/", views.activate, name = "activate"),
 
     path('book/', views.book_driver_view, name='book_driver_view'),
-    path('drivers/', views.drivers_view, name='drivers_view'),
+    path('drivers/', views.prices_view, name='prices_view'),
     path('gallery/', views.gallery_view, name='gallery_view'),
 
     path('feedbacks/', views.feedback_view, name='feedback_view'),

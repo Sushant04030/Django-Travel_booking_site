@@ -3,7 +3,8 @@
       <div  class="login_register">
         <form action="{% url 'book_driver_view' %}" method="POST">
             {% csrf_token %}
-          <h2>Driver Booking</h2>
+          <h2 style="text-align:center;">Driver Booking Form</h2>
+          <br>
           <label for="FormControlInput1">Full Name :</label>
           <br>
           <input type="text" id="FormControlInput1" placeholder="Full name" name="fullname" required>
@@ -27,6 +28,7 @@
           <label for="FormControlInput1">Duration (days) :</label>
           <br>
           <input type="number" id="FormControlInput1" placeholder="in days" name="duration" required>
+          <br>
           <br>
 
           <button class='btn-secondary btn' type="submit">submit</button>

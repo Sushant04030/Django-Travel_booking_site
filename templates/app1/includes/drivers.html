@@ -7,7 +7,7 @@
         <div class="text">
           <h2>Our Drivers</h2>
           <p>Our Best Drivers, you can book them right now.</p>
-          <a href="{%url 'drivers_view'%}"> <button class="btn1">VIEW MORE</button></a>
+          <a href="{%url 'prices_view'%}"> <button class="btn1">VIEW MORE</button></a>
 
         </div>
         <div class="accordionWrapper">
@@ -20,7 +20,7 @@
             </div>
           </div> -->
           {% for driver in drivers %}
-          <div class="accordionItem close">
+          <div class="accordionItem {% if forloop.counter0 == 0 %}open {% else %} close {% endif %}">
             <h2 class="accordionIHeading">{{driver.fullname}}</h2>
             <div class="accordionItemContent">
               <img src="{{driver.image.url}}" />

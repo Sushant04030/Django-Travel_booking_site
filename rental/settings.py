@@ -29,6 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -155,6 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'thakurisushant0403@gmail.com'
-EMAIL_HOST_PASSWORD = 'bjvunguvmsgvcdgr'
+EMAIL_HOST_PASSWORD = 'yjcagotjohtxrdgq'
 EMAIL_USE_TLS = True
 
+# SECURE_SSL_REDIRECT = True
